@@ -1,0 +1,166 @@
+class OpenSSL::BN
+  include Comparable
+
+  # Generates a random prime number of bit length *bits*. If *safe* is set to
+  # `true`, generates a safe prime. If *add* is specified, generates a prime that
+  # fulfills condition `p % add = rem`.
+  #
+  # ### Parameters
+  # *   *bits* - integer
+  # *   *safe* - boolean
+  # *   *add* - BN
+  # *   *rem* - BN
+  #
+  #
+  def self.generate_prime: (Integer bits, ?bool safe, ?Integer add, ?Integer rem) -> OpenSSL::BN
+
+  def self.pseudo_rand: (Integer bits, ?Integer fill, ?bool odd) -> OpenSSL::BN
+
+  def self.pseudo_rand_range: (OpenSSL::BN | Integer range) -> OpenSSL::BN
+
+  def self.rand: (Integer bits, ?Integer fill, ?bool odd) -> OpenSSL::BN
+
+  def self.rand_range: (OpenSSL::BN | Integer range) -> OpenSSL::BN
+
+  public
+
+  def %: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def *: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def **: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def +: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def +@: () -> OpenSSL::BN
+
+  def -: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def -@: () -> OpenSSL::BN
+
+  # Division of OpenSSL::BN instances
+  #
+  def /: (OpenSSL::BN | Integer) -> [OpenSSL::BN, OpenSSL::BN]
+
+  def <<: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  alias <=> cmp
+
+  # Returns `true` only if *obj* has the same value as *bn*. Contrast this with
+  # OpenSSL::BN#eql?, which requires obj to be OpenSSL::BN.
+  #
+  def ==: (OpenSSL::BN | Integer) -> bool
+
+  alias === ==
+
+  def >>: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  # Tests bit *bit* in *bn* and returns `true` if set, `false` if not set.
+  #
+  def bit_set?: (OpenSSL::BN | Integer) -> bool
+
+  def clear_bit!: (OpenSSL::BN | Integer) -> self
+
+  def cmp: (OpenSSL::BN | Integer) -> Integer
+
+  def coerce: (OpenSSL::BN) -> [ OpenSSL::BN, OpenSSL::BN ]
+            | (Integer) -> [ Integer, Integer ]
+            | (String) -> [ String, String ]
+
+  def copy: (OpenSSL::BN | Integer) -> self
+
+  # Returns `true` only if *obj* is a `OpenSSL::BN` with the same value as *bn*.
+  # Contrast this with OpenSSL::BN#==, which performs type conversions.
+  #
+  #     bn.eql?(obj) => true or false
+  #
+  def eql?: (OpenSSL::BN | Integer) -> bool
+
+  def gcd: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  # Returns a hash code for this object.
+  #
+  # See also Object#hash.
+  #
+  def hash: () -> Integer
+
+  def lshift!: (OpenSSL::BN | Integer) -> self
+
+  def mask_bits!: (OpenSSL::BN | Integer) -> self
+
+  def mod_add: ((OpenSSL::BN | Integer) other, (OpenSSL::BN | Integer) m) -> OpenSSL::BN
+
+  def mod_exp: ((OpenSSL::BN | Integer) other, (OpenSSL::BN | Integer) m) -> OpenSSL::BN
+
+  def mod_inverse: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def mod_mul: ((OpenSSL::BN | Integer) other, (OpenSSL::BN | Integer) m) -> OpenSSL::BN
+
+  def mod_sqr: (OpenSSL::BN | Integer) -> OpenSSL::BN
+
+  def mod_sub: ((OpenSSL::BN | Integer) other, (OpenSSL::BN | Integer) m) -> OpenSSL::BN
+
+  def negative?: () -> bool
+
+  def num_bits: () -> Integer
+
+  def num_bytes: () -> Integer
+
+  def odd?: () -> bool
+
+  def one?: () -> bool
+
+  # Performs a Miller-Rabin probabilistic primality test with *checks* iterations.
+  # If *checks* is not specified, a number of iterations is used that yields a
+  # false positive rate of at most 2^-80 for random input.
+  #
+  # ### Parameters
+  # *   *checks* - integer
+  #
+  #
+  def prime?: (?(OpenSSL::BN | Integer) checks) -> bool
+
+  # Performs a Miller-Rabin primality test. This is same as #prime? except this
+  # first attempts trial divisions with some small primes.
+  #
+  # ### Parameters
+  # *   *checks* - integer
+  # *   *trial_div* - boolean
+  #
+  #
+  def prime_fasttest?: (?(OpenSSL::BN | Integer) checks, ?bool vtrivdiv) -> bool
+
+  def rshift!: (OpenSSL::BN | Integer) -> self
+
+  def set_bit!: (OpenSSL::BN | Integer) -> self
+
+  def sqr: () -> OpenSSL::BN
+
+  def to_bn: () -> self
+
+  def to_i: () -> Integer
+
+  alias to_int to_i
+
+  # ### Parameters
+  # *   *base* - Integer Valid values:
+  #     *   0 - MPI
+  #     *   2 - binary
+  #     *   10 - the default
+  #     *   16 - hex
+  #
+  #
+  def to_s: (?(OpenSSL::BN | Integer) base) -> String
+
+  def ucmp: (OpenSSL::BN | Integer) -> Integer
+
+  def zero?: () -> bool
+
+  private
+
+  # Construct a new OpenSSL BIGNUM object.
+  #
+  def initialize: (Integer) -> void
+                | (String, ?(0 | 2 | 10 | 16)) -> void
+                | (OpenSSL::BN) -> void
+end
