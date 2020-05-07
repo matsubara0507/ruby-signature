@@ -1,0 +1,6 @@
+module OpenSSL
+end
+
+interface OpenSSL::_ToDer
+  def to_der: () -> String
+end
