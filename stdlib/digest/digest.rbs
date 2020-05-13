@@ -1,0 +1,397 @@
+# This module provides a framework for message digest libraries.
+#
+# You may want to look at OpenSSL::Digest as it supports more algorithms.
+#
+# A cryptographic hash function is a procedure that takes data and returns a
+# fixed bit string: the hash value, also known as *digest*. Hash functions are
+# also called one-way functions, it is easy to compute a digest from a message,
+# but it is infeasible to generate a message from a digest.
+#
+# ## Examples
+#
+#     require 'digest'
+#
+#     # Compute a complete digest
+#     Digest::SHA256.digest 'message'       #=> "\xABS\n\x13\xE4Y..."
+#
+#     sha256 = Digest::SHA256.new
+#     sha256.digest 'message'               #=> "\xABS\n\x13\xE4Y..."
+#
+#     # Other encoding formats
+#     Digest::SHA256.hexdigest 'message'    #=> "ab530a13e459..."
+#     Digest::SHA256.base64digest 'message' #=> "q1MKE+RZFJgr..."
+#
+#     # Compute digest by chunks
+#     md5 = Digest::MD5.new
+#     md5.update 'message1'
+#     md5 << 'message2'                     # << is an alias for update
+#
+#     md5.hexdigest                         #=> "94af09c09bb9..."
+#
+#     # Compute digest for a file
+#     sha256 = Digest::SHA256.file 'testfile'
+#     sha256.hexdigest
+#
+# Additionally digests can be encoded in "bubble babble" format as a sequence of
+# consonants and vowels which is more recognizable and comparable than a
+# hexadecimal digest.
+#
+#     require 'digest/bubblebabble'
+#
+#     Digest::SHA256.bubblebabble 'message' #=> "xopoh-fedac-fenyh-..."
+#
+# See the bubble babble specification at
+# http://web.mit.edu/kenta/www/one/bubblebabble/spec/jrtrjwzi/draft-huima-01.txt
+# .
+#
+# ## Digest algorithms
+#
+# Different digest algorithms (or hash functions) are available:
+#
+# MD5
+# :   See RFC 1321 The MD5 Message-Digest Algorithm
+# RIPEMD-160
+# :   As Digest::RMD160. See
+#     http://homes.esat.kuleuven.be/~bosselae/ripemd160.html.
+# SHA1
+# :   See FIPS 180 Secure Hash Standard.
+# SHA2 family
+# :   See FIPS 180 Secure Hash Standard which defines the following algorithms:
+#     *   SHA512
+#     *   SHA384
+#     *   SHA256
+#
+#
+#
+# The latest versions of the FIPS publications can be found here:
+# http://csrc.nist.gov/publications/PubsFIPS.html.
+#
+module Digest
+  def self.const_missing: (untyped name) -> untyped
+
+  # Generates a hex-encoded version of a given *string*.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     Digest.hexencode(string) -> hexencoded_string
+  #
+  def self.hexencode: (untyped) -> untyped
+
+  private
+
+  def hexencode: (untyped) -> untyped
+end
+
+# A mutex for Digest().
+#
+Digest::REQUIRE_MUTEX: Thread::Mutex
+
+# This module provides instance methods for a digest implementation object to
+# calculate message digest values.
+#
+module Digest::Instance
+  public
+
+  # Updates the digest using a given *string* and returns self.
+  #
+  # The update() method and the left-shift operator are overridden by each
+  # implementation subclass. (One should be an alias for the other)
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj << string -> digest_obj
+  #
+  def <<: (untyped) -> untyped
+
+  # If a string is given, checks whether it is equal to the hex-encoded hash value
+  # of the digest object.  If another digest instance is given, checks whether
+  # they have the same hash value.  Otherwise returns false.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj == another_digest_obj -> boolean
+  #     digest_obj == string -> boolean
+  #
+  def ==: (untyped) -> untyped
+
+  # If none is given, returns the resulting hash value of the digest in a base64
+  # encoded form, keeping the digest's state.
+  #
+  # If a `string` is given, returns the hash value for the given `string` in a
+  # base64 encoded form, resetting the digest to the initial state before and
+  # after the process.
+  #
+  # In either case, the return value is properly padded with '=' and contains no
+  # line feeds.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     base64digest(str = nil)
+  #
+  def base64digest: (?untyped str) -> untyped
+
+  # Returns the resulting hash value and resets the digest to the initial state.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     base64digest!()
+  #
+  def base64digest!: () -> untyped
+
+  # Returns the block length of the digest.
+  #
+  # This method is overridden by each implementation subclass.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.block_length -> integer
+  #
+  def block_length: () -> untyped
+
+  # If none is given, returns the resulting hash value of the digest, keeping the
+  # digest's state.
+  #
+  # If a *string* is given, returns the hash value for the given *string*,
+  # resetting the digest to the initial state before and after the process.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.digest -> string
+  #     digest_obj.digest(string) -> string
+  #
+  def digest: (*untyped) -> untyped
+
+  # Returns the resulting hash value and resets the digest to the initial state.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.digest! -> string
+  #
+  def digest!: () -> untyped
+
+  # Returns the length of the hash value of the digest.
+  #
+  # This method should be overridden by each implementation subclass. If not,
+  # digest_obj.digest().length() is returned.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.digest_length -> integer
+  #
+  def digest_length: () -> untyped
+
+  # Updates the digest with the contents of a given file *name* and returns self.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     file(name)
+  #
+  def file: (untyped name) -> untyped
+
+  # If none is given, returns the resulting hash value of the digest in a
+  # hex-encoded form, keeping the digest's state.
+  #
+  # If a *string* is given, returns the hash value for the given *string* in a
+  # hex-encoded form, resetting the digest to the initial state before and after
+  # the process.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.hexdigest -> string
+  #     digest_obj.hexdigest(string) -> string
+  #
+  def hexdigest: (*untyped) -> untyped
+
+  # Returns the resulting hash value in a hex-encoded form and resets the digest
+  # to the initial state.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.hexdigest! -> string
+  #
+  def hexdigest!: () -> untyped
+
+  # Creates a printable version of the digest object.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.inspect -> string
+  #
+  def inspect: () -> untyped
+
+  # Returns digest_obj.digest_length().
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.length -> integer
+  #
+  def length: () -> untyped
+
+  # Returns a new, initialized copy of the digest object.  Equivalent to
+  # digest_obj.clone().reset().
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.new -> another_digest_obj
+  #
+  def new: () -> untyped
+
+  # Resets the digest to the initial state and returns self.
+  #
+  # This method is overridden by each implementation subclass.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.reset -> digest_obj
+  #
+  def reset: () -> untyped
+
+  # Returns digest_obj.digest_length().
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.size -> integer
+  #
+  def size: () -> untyped
+
+  # Returns digest_obj.hexdigest().
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.to_s -> string
+  #
+  def to_s: () -> untyped
+
+  # Updates the digest using a given *string* and returns self.
+  #
+  # The update() method and the left-shift operator are overridden by each
+  # implementation subclass. (One should be an alias for the other)
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.update(string) -> digest_obj
+  #
+  def update: (untyped) -> untyped
+
+  private
+
+  # Finishes the digest and returns the resulting hash value.
+  #
+  # This method is overridden by each implementation subclass and often made
+  # private, because some of those subclasses may leave internal data
+  # uninitialized.  Do not call this method from outside.  Use #digest!() instead,
+  # which ensures that internal data be reset for security reasons.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_obj.instance_eval { finish } -> digest_obj
+  #
+  def finish: () -> untyped
+end
+
+# This module stands as a base class for digest implementation classes.
+#
+class Digest::Class
+  include Instance
+
+  # Returns the base64 encoded hash value of a given *string*.  The return value
+  # is properly padded with '=' and contains no line feeds.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     base64digest(str, *args)
+  #
+  def self.base64digest: (untyped str, *untyped args) -> untyped
+
+  # Returns the hash value of a given *string*.  This is equivalent to
+  # Digest::Class.new(*parameters).digest(string), where extra *parameters*, if
+  # any, are passed through to the constructor and the *string* is passed to
+  # #digest().
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     Digest::Class.digest(string, *parameters) -> hash_string
+  #
+  def self.digest: (*untyped) -> untyped
+
+  # Creates a digest object and reads a given file, *name*. Optional arguments are
+  # passed to the constructor of the digest class.
+  #
+  #     p Digest::SHA256.file("X11R6.8.2-src.tar.bz2").hexdigest
+  #     # => "f02e3c85572dc9ad7cb77c2a638e3be24cc1b5bea9fdbb0b0299c9668475c534"
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     file(name, *args)
+  #
+  def self.file: (untyped name, *untyped args) -> untyped
+
+  # Returns the hex-encoded hash value of a given *string*.  This is almost
+  # equivalent to Digest.hexencode(Digest::Class.new(*parameters).digest(string)).
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     Digest::Class.hexdigest(string[, ...]) -> hash_string
+  #
+  def self.hexdigest: (*untyped) -> untyped
+
+  private
+
+  def initialize: () -> untyped
+end
+
+# This abstract class provides a common interface to message digest
+# implementation classes written in C.
+#
+# ## Write a Digest subclass in C
+# Digest::Base provides a common interface to message digest classes written in
+# C. These classes must provide a struct of type rb_digest_metadata_t:
+#     typedef int (*rb_digest_hash_init_func_t)(void *);
+#     typedef void (*rb_digest_hash_update_func_t)(void *, unsigned char *, size_t);
+#     typedef int (*rb_digest_hash_finish_func_t)(void *, unsigned char *);
+#
+#     typedef struct {
+#       int api_version;
+#       size_t digest_len;
+#       size_t block_len;
+#       size_t ctx_size;
+#       rb_digest_hash_init_func_t init_func;
+#       rb_digest_hash_update_func_t update_func;
+#       rb_digest_hash_finish_func_t finish_func;
+#     } rb_digest_metadata_t;
+#
+# This structure must be set as an instance variable named `metadata` (without
+# the +@+ in front of the name). By example:
+#      static const rb_digest_metadata_t sha1 = {
+#         RUBY_DIGEST_API_VERSION,
+#         SHA1_DIGEST_LENGTH,
+#         SHA1_BLOCK_LENGTH,
+#         sizeof(SHA1_CTX),
+#         (rb_digest_hash_init_func_t)SHA1_Init,
+#         (rb_digest_hash_update_func_t)SHA1_Update,
+#         (rb_digest_hash_finish_func_t)SHA1_Finish,
+#     };
+#
+#     rb_ivar_set(cDigest_SHA1, rb_intern("metadata"),
+#                 Data_Wrap_Struct(0, 0, 0, (void *)&sha1));
+#
+class Digest::Base < Digest::Class
+  public
+
+  # Update the digest using given *string* and return `self`.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_base << string -> digest_base
+  #
+  def <<: (untyped) -> untyped
+
+  # Return the block length of the digest in bytes.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_base.block_length -> Integer
+  #
+  def block_length: () -> untyped
+
+  # Return the length of the hash value in bytes.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_base.digest_length -> Integer
+  #
+  def digest_length: () -> untyped
+
+  # Reset the digest to its initial state and return `self`.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_base.reset -> digest_base
+  #
+  def reset: () -> untyped
+
+  # Update the digest using given *string* and return `self`.
+  #
+  # # arglists 💪👽🚨 << Delete this section
+  #     digest_base.update(string) -> digest_base
+  #
+  def update: (untyped) -> untyped
+
+  private
+
+  def finish: () -> untyped
+
+  def initialize_copy: (untyped) -> untyped
+end
